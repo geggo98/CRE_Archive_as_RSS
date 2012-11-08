@@ -23,10 +23,18 @@ import xml.XML
  * pages in the simulated browser and also extracts the content. It then uses this extracted content to construct a
  * static RSS file as a static XML file.
  *
- * DISCLAIMER: I am not affiliated with the CRE. I am just a listener who needs a RSS file for the archive, so I can
+ * DISCLAIMER:
+ *
+ * I am not affiliated with CRE. I am just a listener who needs a RSS file for the archive, so I can
  * load theses episodes on my mobile devices and listen to them while I am travelling.
  *
- * I share this script in the hope, someone will find it useful.
+ * I share this script in the hope, someone will find it useful. Please examine the file carefully before you run it.
+ * I cannot give any guarantee or warranty about the functionality. Run at your own risk.
+ *
+ * LICENSE
+ *
+ * Please consider this project as part of the public domain.
+ * Bitte Projekt als gemeinfrei betrachten.
  *
  * User: stefan.schwetschke@googlemail.com
  * Date: 05.11.12
