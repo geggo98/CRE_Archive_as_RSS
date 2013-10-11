@@ -96,7 +96,7 @@ object Main extends App {
     val thumbnailImageUrl=e.findElement(By.xpath("""./td[@class='thumbnail']/img""")).getAttribute("src")
     val dateString=e.findElement(By.xpath("""./td[@class='date']/*[@class='release_date']""")).getText
     val date=dateString match {
-      case f@archiveDateFormat(day, month, year) => new DateTime(year.toInt, month.toInt, day.toInt,0,0,0,archiveTimeZone)
+      case archiveDateFormat(day, month, year) => new DateTime(year.toInt, month.toInt, day.toInt,0,0,0,archiveTimeZone)
       case _ => new DateTime()
     }
     val detailPageUrl=e.findElement(By.xpath("""./td[@class='title']/a""")).getAttribute("href")
@@ -112,9 +112,10 @@ object Main extends App {
       println(e.title)
       val webDriver=createWebDriver
       webDriver.get(e.detailPageUrl)
-      val summary=webDriver.findElement(By.className("entry-content")).getText
-      val mediaEnclosureUrl=webDriver.findElement(By.xpath("""//a[@class='powerpress_link_d'][@title='Download']""")).
-        getAttribute("href")
+      val meta = webDriver.findElements(By.tagName("meta"))
+      val summary = meta.find(e => e.getAttribute("property") == "og:description").get.getAttribute("content")
+      val mediaEnclosureUrl = meta.find(e => e.getAttribute("property") == "og:audio" && e.getAttribute("content").endsWith(".m4a"))
+      									.get.getAttribute("content")
       webDriver.close()
       val connection=(new URL(mediaEnclosureUrl)).openConnection()
       connection.connect()
@@ -160,7 +161,7 @@ object Main extends App {
             <itunes:author>Tim Pritlove</itunes:author>
             <itunes:summary>{episode.detail.summary}</itunes:summary>
             <itunes:image href={episode.archive.thumbnailImageUrl} />
-            <enclosure url={episode.medium.enclosureUrl} length={episode.medium.sizeInBytes.toString}  type="audio/x-mp3" />
+            <enclosure url={episode.medium.enclosureUrl} length={episode.medium.sizeInBytes.toString}  type="audio/x-m4a" />
             <guid>{episode.medium.enclosureUrl}</guid>
             <pubDate>{episode.archive.date.toString(podcastDateFormatInEnglish)}</pubDate>
             <itunes:duration>{episode.archive.duration}</itunes:duration>
